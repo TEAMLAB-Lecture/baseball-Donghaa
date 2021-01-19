@@ -197,7 +197,7 @@ def get_strikes_or_ball(user_input_number, random_number):
         
     
     # ==================================
-    return result[0], result[1]
+    return result
 
 
 def is_yes(one_more_input):
