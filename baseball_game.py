@@ -283,6 +283,9 @@ def main():
             user_input = input("Input guess number : ")
             if user_input == '0':
                 break
+            elif not is_validated_number(user_input):
+                print("Wrong Input, Input again")
+                break
             S, B = get_strikes_or_ball(user_input, random_number)
             print(f"Strikes : {S} , Balls : {B}")
             if S == 3:
