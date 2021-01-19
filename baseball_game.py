@@ -31,7 +31,7 @@ def is_digit(user_input_number):
     # '''
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
-    result = None
+    result = str(user_input_number).isdigit()
 
     # ==================================
     return result
@@ -58,7 +58,10 @@ def is_between_100_and_999(user_input_number):
     # '''
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
-    result = None
+    if 100 <= int(user_input_number) and int(user_input_number) < 1000:
+        result = True
+    else:
+        result = False
 
     # ==================================
     return result
@@ -87,7 +90,10 @@ def is_duplicated_number(three_digit):
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
 
-    result = None
+    if len(str(three_digit)) > len(set(str(three_digit))):
+        result = True
+    else:
+        result = False
     # ==================================
     return result
 
@@ -115,7 +121,10 @@ def is_validated_number(user_input_number):
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
 
-    result = None
+    if is_digit(user_input_number) and is_between_100_and_999(user_input_number) and not is_duplicated_number(user_input_number):
+        result = True
+    else:
+        result = False
     # ==================================
     return result
 
@@ -141,8 +150,11 @@ def get_not_duplicated_three_digit_number():
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
     # get_random_number() 함수를 사용하여 random number 생성
+    number = 999
+    while is_duplicated_number(number):
+        number = get_random_number()
 
-    result = None
+    result = number
     # ==================================
     return result
 
@@ -174,8 +186,16 @@ def get_strikes_or_ball(user_input_number, random_number):
     # '''
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
-
-    result = None
+    result = [0, 0]
+    for i in range(3):
+        if user_input_number[i] == random_number[i]:
+            result[0] += 1
+        elif user_input_number[i] == random_number[(i+1)%3]:
+            result[1] += 1
+        elif user_input_number[i] == random_number[(i+2)%3]:
+            result[1] += 1
+        
+    
     # ==================================
     return result
 
@@ -206,8 +226,11 @@ def is_yes(one_more_input):
     # '''
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
-
-    result = None
+    tmp_str = one_more_input.upper()
+    if tmp_str == 'Y' or tmp_str =='YES':
+        result = True
+    else:
+        result = False
     # ==================================
     return result
 
@@ -238,8 +261,11 @@ def is_no(one_more_input):
     # '''
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
-
-    result = None
+    tmp_str = one_more_input.upper()
+    if tmp_str == 'N' or tmp_str =='NO':
+        result = True
+    else:
+        result = False
     # ==================================
     return result
 
@@ -251,6 +277,27 @@ def main():
     print("Random Number is : ", random_number)
     # ===Modify codes below=============
     # 위의 코드를 포함하여 자유로운 수정이 가능함
+    
+    while user_input != '0':
+        while is_validated_number(user_input):
+            user_input = input("Input guess number : ")
+            if user_input == '0':
+                break
+            point = get_strikes_or_ball(user_input, random_number)
+            print(f"Strikes : {point[0]} , Balls : {point[1]}")
+            if point[0] == 3:
+                while True:
+                    yn = input("You win, one more (Y/N) ?")
+                    if is_yes(yn):
+                        user_input = 999
+                        random_number = str(get_not_duplicated_three_digit_number())
+                        print("Random Number is : ", random_number)
+                        break
+                    elif is_no(yn):
+                        user_input = '0'
+                        break
+
+
 
 
     # ==================================
