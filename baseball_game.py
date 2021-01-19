@@ -197,7 +197,7 @@ def get_strikes_or_ball(user_input_number, random_number):
         
     
     # ==================================
-    return result
+    return result[0], result[1]
 
 
 def is_yes(one_more_input):
@@ -283,9 +283,9 @@ def main():
             user_input = input("Input guess number : ")
             if user_input == '0':
                 break
-            point = get_strikes_or_ball(user_input, random_number)
-            print(f"Strikes : {point[0]} , Balls : {point[1]}")
-            if point[0] == 3:
+            S, B = get_strikes_or_ball(user_input, random_number)
+            print(f"Strikes : {S} , Balls : {B}")
+            if S == 3:
                 while True:
                     yn = input("You win, one more (Y/N) ?")
                     if is_yes(yn):
